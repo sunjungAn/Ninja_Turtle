@@ -9,8 +9,6 @@
 
 <img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
-<br>
-
 ## :turtle: 활동
 
 * ### [프로젝트 제안서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
