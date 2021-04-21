@@ -9,6 +9,12 @@
 
 <br>
 
+## :turtle: 활동
+
+* ### [프로젝트 제안서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
+
+<br>
+
 ## :turtle: 팀원
 
 > **최현민 [(hyunmin0317)](https://github.com/hyunmin0317?tab=repositories)**
