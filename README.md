@@ -7,7 +7,7 @@
 
 * ### 거북목 예방 프로그램
 
-<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" style="zoom:30%;" />
+<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
 <br>
 
