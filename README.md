@@ -5,7 +5,7 @@
 
 ## :turtle: Subject 
 
-* ### Pose Landmark Model을 이용한 실시간 거북목 예방 시스템
+* ### 실시간 거북목 예방 시스템
 
 <img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
