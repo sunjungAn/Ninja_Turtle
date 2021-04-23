@@ -13,6 +13,8 @@
 
 * ### [프로젝트 제안서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
 
+* ### [프로젝트 중간발표](https://www.youtube.com/watch?v=4EsYL7l931w)
+
 <br>
 
 ## :turtle: 팀원
