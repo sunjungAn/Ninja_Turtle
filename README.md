@@ -17,6 +17,11 @@
 
 <br>
 
+## :turtle: 기술 다이어그램
+
+![image](https://user-images.githubusercontent.com/55094745/116191702-c136db80-a767-11eb-8fc5-216e5e9c677f.png)
+
+
 ## :turtle: 팀원
 
 > **최현민 [(hyunmin0317)](https://github.com/hyunmin0317?tab=repositories)**
