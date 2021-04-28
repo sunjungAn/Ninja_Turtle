@@ -21,8 +21,6 @@
 
 ![image](https://user-images.githubusercontent.com/55094745/116191702-c136db80-a767-11eb-8fc5-216e5e9c677f.png)
 
-<br>
-
 ## :turtle: 구현 현황
 
 * ### [NeckSlice](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/NeckSlice.md)
