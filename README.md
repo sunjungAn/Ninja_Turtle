@@ -7,7 +7,7 @@
 
 * ### 실시간 거북목 예방 시스템
 
-<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
+<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
 ## :turtle: 활동
 
@@ -20,6 +20,14 @@
 ## :turtle: 기술 다이어그램
 
 ![image](https://user-images.githubusercontent.com/55094745/116191702-c136db80-a767-11eb-8fc5-216e5e9c677f.png)
+
+<br>
+
+## :turtle: 구현 현황
+
+* ### [NeckSlice](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/NeckSlice.md)
+
+<br>
 
 
 ## :turtle: 팀원
