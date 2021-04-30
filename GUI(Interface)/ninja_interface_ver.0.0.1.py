@@ -1,43 +1,67 @@
-import tkinter as tk
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, \
+    QMainWindow, QDesktopWidget, QLabel, QVBoxLayout
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QCoreApplication
 
-class SampleApp(tk.Tk):
-def __init__(self):
-tk.Tk.__init__(self)
-self._frame = None
-self.switch_frame(StartPage)
+class MyApp(QMainWindow):
 
-def switch_frame(self, frame_class):
-print(self, frame_class)
-new_frame = frame_class(self)
-if self._frame is not None:
-self._frame.destroy()
-#self._frame.grid_remove()
-self._frame = new_frame
-self._frame.pack()
+    def __init__(self):
+        super().__init__()
+        self.initUI()
 
-# frame2.grid_remove()
-
-class StartPage(tk.Frame):
-def __init__(self, master):
-tk.Frame.__init__(self, master)
-tk.Label( text = "Ninja turtle",width = 50,height =20,bg = "black",fg = "white",).pack(side="top", fill="x", pady=5)
-tk.Button(self, text="Start!", #시작 버튼
-command=lambda: master.switch_frame(PageOne)).pack()
-
-#tk.Button(self, text="Exit", #나가기(종료) 버튼
-# command=lambda: master.switch_frame(PageTwo)).pack()
+    def center(self):  # 가운데로 창이 뜨게함
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 
-class PageOne(tk.Frame):
-def __init__(self, master):
-tk.Frame.__init__(self, master)
-tk.Frame.configure(self,bg='black')
-tk.Label(self, text="Page one", font=('Helvetica', 18, "bold")).pack(side="top", fill="x", pady=5)
-tk.Button(self, text="Go back to start page",
-command=lambda: master.switch_frame(StartPage)).pack()
+    def initUI(self):
+        btn1 = QPushButton('Quit', self) #창 종료 버튼
+        btn1.move(50,430)
+        btn1.resize(btn1.sizeHint())
+        btn1.clicked.connect(QCoreApplication.instance().quit)
+
+        btn2 = QPushButton('Start', self) #기능 실행 버튼
+        btn2.move(330, 430)
+        btn2.resize(btn2.sizeHint())
+        btn2.setCheckable(True)
+        btn2.toggle()
+        btn2.clicked.connect(PageTwo)
+
+        btn3 = QPushButton('Info', self) #정보 창 실행
+        btn3.move(200, 430)
+        btn3.resize(btn3.sizeHint())
+
+
+        self.statusBar().showMessage('Main Page') #상태바
+        self.setGeometry(500, 500, 500, 500) # x, y, height, width
+        self.setWindowTitle("Ninja_Turtle")
+        #self.setWindowIcon(QIcon("images/letter-s.png")) 아이콘 설정
+        self.center() #창을 가운데로
+        self.show()
+
+
+class PageTwo(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+        def initUI(self):
+
+            self.statusBar().showMessage('PageTwo')  # 상태바
+            self.setGeometry(500, 500, 500, 500)  # x, y, height, width
+            self.setWindowTitle("Ninja_Turtle")
+            # self.setWindowIcon(QIcon("images/letter-s.png")) 아이콘 설정
+            self.show()
 
 
 
-if __name__ == "__main__":
-app = SampleApp()
-app.mainloop()
+
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = MyApp()
+    sys.exit(app.exec_())
