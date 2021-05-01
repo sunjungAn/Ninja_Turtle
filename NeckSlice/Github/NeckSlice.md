@@ -155,8 +155,8 @@ cap.release()
 
 * 얼굴과 포즈의 landmark 인식 오류처리
 
-  ![result01.PNG](https://github.com/hyunmin0317/OpenCV_Study/blob/master/NeckSlice/NeckSlice(ver.2.0)/Github/result01.PNG)
+  ![result01.PNG](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/result01.PNG?raw=true)
 
 * 거북목 판별 결과
 
-  ![result02.PNG](https://github.com/hyunmin0317/OpenCV_Study/blob/master/NeckSlice/NeckSlice(ver.2.0)/Github/result02.PNG)
+  ![result02.PNG](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/result02.PNG?raw=true)
