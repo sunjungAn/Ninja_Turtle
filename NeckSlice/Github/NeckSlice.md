@@ -1,4 +1,4 @@
-# NeckSlice(ver.1.0)
+# NeckSlice
 
 `거북목 예방 프로그램 연습 구현`
 
@@ -8,39 +8,45 @@
 
 `앞에서 공부한 MediaPipe Pose를 사용하고 비율을 계산하여 NeckSlice 프로그램 구현` 
 
-* 코의 y 좌표
+* 직선과 점 사이의 거리를 구하는 함수
 
   ```python
-  ny = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE].y * image_height
+  def dist(P, A, B):
+      area = abs((A.x - P.x) * (B.y - P.y) - (A.y - P.y) * (B.x - P.x))
+      AB = ((A.x - B.x) ** 2 + (A.y - B.y) ** 2) ** 0.5
+      return (area / AB)
   ```
 
-* 양쪽 입과 어깨의 중앙점 y 좌표 계산
-
-  ```
-  my = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT].y)/2 * image_height
-  sy = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y)/2 * image_height
-  ```
-
-* 어깨의 중앙점과 입의 중앙점 길이 그리고 코와 입의 중앙점의 길이를 구하여 비율 계산
+* 거북목 판별을 위한 비율을 구하는 함수
 
   ```python
-  r = (my-sy)/(ny-my)
+  def cal_rate(nose, left_mouth, right_mouth, left_shoulder, right_shoulder):
+    a = dist(nose, left_shoulder, right_shoulder)
+    b = dist(nose, left_mouth, right_mouth)
+    r = a / b
+    return r
   ```
 
-  ![image01.PNG](https://github.com/hyunmin0317/OpenCV_Study/blob/master/NeckSlice/NeckSlice(ver.1.0)/Github/image01.PNG?raw=true)
+<br>
 
-* 영상에서의 비율아 기준(사진에서의 비율 - 0.5)보다 작으면 현재 비율을 출력하고 'neckslice.jpg' 사진을 보여줌
+* 영상에서의 얼굴과 포즈의 landmark를 인식하지 못하는 오류 처리
 
   ```python
-  if(rate<r-0.5):
-        print("Neck Slice!! - 현재 비율: ", rate)
-        cv2.namedWindow('Neck Slice')
-        cv2.imshow('Neck Slice',neckslice)
-  else:
-      cv2.destroyWindow("Neck Slice")
+  if results.pose_landmarks is None:
+        print("no landmark")
+        continue
   ```
 
-* 거북목 판정 비율과 현재 비율을 화면에 출력
+* 영상에서의 비율이 기준(사진에서의 비율 - 0.3)보다 작으면 현재 비율을 출력하고 'neckslice.jpg' 사진을 보여줌
+
+  ```python
+  if(rate<r):
+        cv2.namedWindow('Neck Slice!!')
+        cv2.imshow('Neck Slice!!',neckslice)
+      else:
+          cv2.destroyWindow("Neck Slice!!")
+  ```
+
 
 <br>
 
@@ -54,6 +60,17 @@ import os
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 neckslice = cv2.imread("./neckslice.jpg")
+
+def dist(P, A, B):
+    area = abs((A.x - P.x) * (B.y - P.y) - (A.y - P.y) * (B.x - P.x))
+    AB = ((A.x - B.x) ** 2 + (A.y - B.y) ** 2) ** 0.5
+    return (area / AB)
+
+def cal_rate(nose, left_mouth, right_mouth, left_shoulder, right_shoulder):
+  a = dist(nose, left_shoulder, right_shoulder)
+  b = dist(nose, left_mouth, right_mouth)
+  r = a / b
+  return r
 
 # For static images:
 with mp_pose.Pose(
@@ -69,12 +86,14 @@ with mp_pose.Pose(
     # upper_body_only is set to True.
     mp_drawing.draw_landmarks(
         annotated_image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-    ny = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE].y * image_height
-    my = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT].y)/2 * image_height 
-    sy = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y)/2 * image_height
-    r = (my-sy)/(ny-my)
+
+    n = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]
+    lm = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT]
+    rm = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT]
+    ls = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER]
+    rs = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+    r = cal_rate(n, lm, rm, ls, rs) - 0.3
     cv2.imwrite('./result.jpg', annotated_image)
-    print("평소 비율: ",r)
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
@@ -104,19 +123,26 @@ with mp_pose.Pose(
     mp_drawing.draw_landmarks(
         image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
-    ny = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE].y * image_height
-    my = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT].y)/2 * image_height 
-    sy = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y)/2 * image_height
-    rate = (my-sy)/(ny-my)
-    
-    cv2.imshow('MediaPipe Pose', image)
-    
-    if(rate<r-0.5):
-      print("Neck Slice!! - 현재 비율: ", rate)
-      cv2.namedWindow('Neck Slice')
-      cv2.imshow('Neck Slice',neckslice)
+    if results.pose_landmarks is None:
+      print("no landmark")
+      continue
+
+    nose = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]
+    left_mouth = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT]
+    right_mouth = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT]
+    left_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER]
+    right_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
+    rate = cal_rate(nose, left_mouth, right_mouth, left_shoulder, right_shoulder)
+
+    cv2.putText(image, "TurtleNeck Ratio : {}".format(r),(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)    
+    cv2.putText(image, "Current Ratio : {}".format(rate),(10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
+    cv2.imshow('NeckSlice', image)
+        
+    if(rate<r):
+      cv2.namedWindow('Neck Slice!!')
+      cv2.imshow('Neck Slice!!',neckslice)
     else:
-        cv2.destroyWindow("Neck Slice")
+        cv2.destroyWindow("Neck Slice!!")
       
     if cv2.waitKey(5) & 0xFF == 27:
       break
@@ -127,4 +153,10 @@ cap.release()
 
 ###  03. NeckSlice Result
 
-![result.PNG](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/result.PNG?raw=true)
+* 얼굴과 포즈의 landmark 인식 오류처리
+
+  ![result01.PNG](https://github.com/hyunmin0317/OpenCV_Study/blob/master/NeckSlice/NeckSlice(ver.2.0)/Github/result01.PNG)
+
+* 거북목 판별 결과
+
+  ![result02.PNG](https://github.com/hyunmin0317/OpenCV_Study/blob/master/NeckSlice/NeckSlice(ver.2.0)/Github/result02.PNG)
