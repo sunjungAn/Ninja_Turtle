@@ -25,6 +25,10 @@
 
 * ### [NeckSlice](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/NeckSlice.md)
 
+* ### [GUI(Interface)](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/GUI(Interface)/Log.md)
+
+* ### [TurtleData](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/Log.md)
+
 <br>
 
 
