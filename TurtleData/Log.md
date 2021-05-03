@@ -6,7 +6,7 @@
 
 ### Mediapipe Pose Landmark
 
-<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/landmark.PNG?raw=true" alt="landmark" style="zoom: 33%;" />
+<img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/result/landmark.PNG?raw=true" alt="landmark" style="zoom:33%;" />
 
 * 거북목 판별에 필요한 landmark: NOSE, RIGHT_EAR, LEFT_EAR, RIGHT_SHOULDER, LEFT_SHOULDER
 
@@ -29,17 +29,17 @@
 
 + ver 1.1 - 세 점 사이의 거리 데이터를 'turtledata.csv' 파일로 저장 (최현민, 임혜지) - 2021.05.03
 
-  ![turtledata]()
+  ![turtledata](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/result/turtledata.PNG?raw=true)
 
 + ver 2.0
 
   + 세 점 사이의 거리 데이터의 가중치를 'turtleweight.csv' 파일로 저장 (최현민) - 2021.05.03
 
-    ![turtleweight]()
+    ![turtleweight](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/result/turtleweight.PNG?raw=true)
 
   + 좋은 자세와 좋지 않은 자세의 데이터를 수집하기 위해 영상 상단에 현재 수행할 자세 종류를 글과 다른 색으로 표시 (최현민) - 2021.05.03
 
-    ![result](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/result(ver.2.0).PNG?raw=true)
+    ![result](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/result/result(ver.2.0).PNG?raw=true)
   
   
 
