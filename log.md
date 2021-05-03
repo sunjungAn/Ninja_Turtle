@@ -1,13 +1,10 @@
 ## 분류 모델
-Ninja_turtle를 구현하기 위한 분류 모델은 SVM을 채택했다.
+Ninja_turtle에서 거북목 판단을 위한 모델
 
-### 기본 요구사항(ver 1.0)
-+ GridSearchCV
-+ 메인 페이지에서 start 버튼을 클릭하면 자세 체크 할 페이지
-+ 메인 페이지에서 quit 버튼을 누르면 인터페이스에서 나감
-+ 자세 체크할때 체크한다고 인터페이스에서 보여줌
-+ 체크 후 기본 동작 실행할 수 있도록 보여줌
-+ 이때, 기본 동작 실행은 웹캠 송출의 거부감을 줄 일 수 있도록 캠은 보여주지 않음 (피드백만 주어짐)
+### 기본 요구사항(ver 1.0) 
++ 초기 모델은 논문에서 사용한 SVM(Support Vector Machine)을 사용
++ GridSearchCV 를 통한 최적 파라미터 찾기
++ 5-Fold 교차 검증
 
 ### Log
-+ ver 0.0.1 - main page, next page frame 구현 (안선정) 
++ ver 1.0(GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
