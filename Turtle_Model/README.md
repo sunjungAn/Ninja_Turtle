@@ -7,4 +7,5 @@ Ninja_turtle에서 거북목 판단을 위한 모델
 + 5-Fold 교차 검증
 
 ### Log
-+ ver 1.0(GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
++ Ver 1.0(GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
++ Ver 1.1(fit -> trasform 구조를 위한 StandardScaling 및 GridSearchCV을 Pipeline으로 구성) - 배은기
