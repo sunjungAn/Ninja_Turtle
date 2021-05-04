@@ -13,5 +13,6 @@ Ninja_turtle에서 거북목 판단을 위한 모델
 + 여러 알고리즘의 성능 시각화
 
 ### Log
-+ Ver 1.0(GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
-+ Ver 1.1(fit -> trasform 구조를 위한 StandardScaling 및 GridSearchCV을 Pipeline으로 구성) - 배은기
++ Ver 1.0 (GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
++ Ver 1.1 (fit -> trasform 구조를 위한 StandardScaling 및 GridSearchCV을 Pipeline으로 구성) - 배은기
++ Ver 2.1 (matplotlib.pyplot을 이용한 GridSearchCV 출력값 시각화) - 배은기
