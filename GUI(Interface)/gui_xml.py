@@ -23,90 +23,10 @@ import sys
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
-
-
-class ShowVideo(QtCore.QObject):
-
-    flag = 0
-
-    camera = cv2.VideoCapture(0)
-
-    ret, image = camera.read()
-    height, width = image.shape[:2]
-
-    VideoSignal1 = QtCore.pyqtSignal(QtGui.QImage)
-    VideoSignal2 = QtCore.pyqtSignal(QtGui.QImage)
-
-    def __init__(self, parent=None):
-        super(ShowVideo, self).__init__(parent)
-
-    @QtCore.pyqtSlot()
-    def startVideo(self):
-        global image
-
-        run_video = True
-        while run_video:
-            ret, image = self.camera.read()
-            color_swapped_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-            qt_image1 = QtGui.QImage(color_swapped_image.data,
-                                    self.width,
-                                    self.height,
-                                    color_swapped_image.strides[0],
-                                    QtGui.QImage.Format_RGB888)
-            self.VideoSignal1.emit(qt_image1)
-
-
-            if self.flag:
-                img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-                img_canny = cv2.Canny(img_gray, 50, 100)
-
-                qt_image2 = QtGui.QImage(img_canny.data,
-                                         self.width,
-                                         self.height,
-                                         img_canny.strides[0],
-                                         QtGui.QImage.Format_Grayscale8)
-
-                self.VideoSignal2.emit(qt_image2)
-
-
-            loop = QtCore.QEventLoop()
-            QtCore.QTimer.singleShot(25, loop.quit) #25 ms
-            loop.exec_()
-
-    @QtCore.pyqtSlot()
-    def canny(self):
-        self.flag = 1 - self.flag
-
-
-class ImageViewer(QtWidgets.QWidget):
-    def __init__(self, parent=None):
-        super(ImageViewer, self).__init__(parent)
-        self.image = QtGui.QImage()
-        self.setAttribute(QtCore.Qt.WA_OpaquePaintEvent)
-
-    def paintEvent(self, event):
-        painter = QtGui.QPainter(self)
-        painter.drawImage(0, 0, self.image)
-        self.image = QtGui.QImage()
-
-    def initUI(self):
-        self.setWindowTitle('Test')
-
-    @QtCore.pyqtSlot(QtGui.QImage)
-    def setImage(self, image):
-        if image.isNull():
-            print("Viewer Dropped frame!")
-
-        self.image = image
-        if image.size() != self.size():
-            self.setFixedSize(image.size())
-        self.update()
-
-
+import cam
 class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
-
+    flag = -1
     def __init__(self):
         super().__init__()
         self._run_flag = True
@@ -126,7 +46,7 @@ class VideoThread(QThread):
         self._run_flag = False
         self.wait()
 
-class Ui_Ninja_Turtle(object):
+class Ui_Ninja_Turtle(QWidget):
     def setupUi(self, Ninja_Turtle):
         Ninja_Turtle.setObjectName("Ninja_Turtle")
         Ninja_Turtle.resize(412, 294)
@@ -151,6 +71,12 @@ class Ui_Ninja_Turtle(object):
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(Ninja_Turtle)
         self.pushButton_3.setGeometry(QtCore.QRect(20, 210, 112, 61))
+        self.label = QtWidgets.QLabel(Ninja_Turtle)
+
+        self.label.setPixmap(QtGui.QPixmap("Ninja_Turtle1.png").scaled(225,220))
+        self.label.setGeometry(QtCore.QRect(160, 70, 225, 200))
+
+
         font = QtGui.QFont()
         font.setFamily("Bodoni MT Black")
         font.setPointSize(12)
@@ -164,12 +90,34 @@ class Ui_Ninja_Turtle(object):
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
-        self.graphicsView = QtWidgets.QGraphicsView(self.frame)
-        self.graphicsView.setGeometry(QtCore.QRect(0, 0, 231, 241))
-        self.graphicsView.setObjectName("graphicsView")
+
+        #self.graphicsView.setObjectName("graphicsView")
+
+
+        # create the video capture thread
+
 
         self.retranslateUi(Ninja_Turtle)
         QtCore.QMetaObject.connectSlotsByName(Ninja_Turtle)
+
+    def closeEvent(self, event):
+        self.thread.stop()
+        event.accept()
+
+    @pyqtSlot(np.ndarray)
+    def update_image(self, cv_img):
+        """Updates the image_label with a new opencv image"""
+        qt_img = self.convert_cv_qt(cv_img)
+        self.label.setPixmap(qt_img)
+
+    def convert_cv_qt(self, cv_img):
+        """Convert from an opencv image to QPixmap"""
+        rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+        h, w, ch = rgb_image.shape
+        bytes_per_line = ch * w
+        convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+        p = convert_to_Qt_format.scaled(225, 220) #, Qt.KeepAspectRatio)
+        return QPixmap.fromImage(p)
 
     def retranslateUi(self, Ninja_Turtle):
         _translate = QtCore.QCoreApplication.translate
@@ -180,22 +128,45 @@ class Ui_Ninja_Turtle(object):
         self.pushButton_2.setText(_translate("Ninja_Turtle", "Start"))
         self.pushButton_2.clicked.connect(self.start_webcam)
 
-        self.pushButton_3.setText(_translate("Ninja_Turtle", "Info"))
+        self.pushButton_3.setText(_translate("Ninja_Turtle", "Stop"))
+        self.pushButton_3.clicked.connect(self.stop)
 
     def exit(self): #나가기
         quit()
 
     def start_webcam(self):
-        self.ShowVideo.startVideo()
+        self.thread = VideoThread()
+        self.thread.change_pixmap_signal.connect(self.update_image)
+        self.thread.start()
+        self.thread.flag = 1
+        # self.graphicsView.setGeometry(QtCore.QRect(0, 0, 231, 241))
+        #vbox = QVBoxLayout()
+        #vbox.addWidget(self.label)
+        #vbox.addWidget(self.textLabel)
+        # set the vbox layout as the widgets layout
+        #vbox.setGeometry(QtCore.QRect(0, 0, 231, 241))
+        #self.setLayout(vbox)
+        #self.thread = VideoThread()
+        #self.thread.change_pixmap_signal.connect(self.update_image)
+        #self.thread.start()
+        #print("정보")
+
+    def stop(self):
+        self.thread.stop()
+        self.label.setPixmap(QtGui.QPixmap("Ninja_Turtle1.png").scaled(225, 220))
+        self.thread.flag = -1 # 캠이 꺼짐을 의미
+
 
 
 
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
+    #app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     Ninja_Turtle = QtWidgets.QDialog()
     ui = Ui_Ninja_Turtle()
     ui.setupUi(Ninja_Turtle)
     Ninja_Turtle.show()
     sys.exit(app.exec_())
+
