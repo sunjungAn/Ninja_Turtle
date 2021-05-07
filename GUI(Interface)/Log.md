@@ -11,3 +11,6 @@ Ninja_turtle은 오프라인 환경을 제공하기 위해 GUI로 인터페이�
 
 ### Log
 + ver 0.0.1 - main page, next page frame 구현 (안선정) 
++ ver 0.1.1 - stop, start, exit버튼 구현 (안선정)
+>> 아직 ai기능이 완성되지 않아 start버튼은 웹캠만 표시하도록 작성
+
