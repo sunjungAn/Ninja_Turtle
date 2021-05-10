@@ -67,7 +67,8 @@ with mp_pose.Pose(
     cv2.putText(image, "Good Pose",(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
     cv2.putText(image, "nose length: {}".format(nose_length),(10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
     cv2.putText(image, "right_ear length: {}".format(rear_length),(10, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
-    cv2.putText(image, "left_ear length: {}".format(lear_length),(10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)   
+    cv2.putText(image, "left_ear length: {}".format(lear_length),(10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
+    cv2.putText(image, "EPOCH: {}".format(epoch),(10, 110), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
     wr2.writerow([0])
     epoch += 1
 
