@@ -6,17 +6,6 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 neckslice = cv2.imread("./neckslice.jpg")
 
-def dist(P, A, B):
-    area = abs((A.x - P.x) * (B.y - P.y) - (A.y - P.y) * (B.x - P.x))
-    AB = ((A.x - B.x) ** 2 + (A.y - B.y) ** 2) ** 0.5
-    return (area / AB)
-
-def cal_rate(nose, left_mouth, right_mouth, left_shoulder, right_shoulder):
-  a = dist(nose, left_shoulder, right_shoulder)
-  b = dist(nose, left_mouth, right_mouth)
-  r = a / b
-  return r
-
 # For static images:
 with mp_pose.Pose(
     static_image_mode=True, min_detection_confidence=0.5) as pose:
@@ -31,13 +20,10 @@ with mp_pose.Pose(
     # upper_body_only is set to True.
     mp_drawing.draw_landmarks(
         annotated_image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
-    n = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]
-    lm = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT]
-    rm = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT]
-    ls = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER]
-    rs = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
-    r = cal_rate(n, lm, rm, ls, rs) - 0.3
+    ny = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE].y * image_height
+    my = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT].y)/2 * image_height 
+    sy = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y)/2 * image_height
+    r = (my-sy)/(ny-my) - 0.5
     cv2.imwrite('./result.jpg', annotated_image)
 
 # For webcam input:
@@ -68,20 +54,14 @@ with mp_pose.Pose(
     mp_drawing.draw_landmarks(
         image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
-    if results.pose_landmarks is None:
-      print("no landmark")
-      continue
-
-    nose = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]
-    left_mouth = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT]
-    right_mouth = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT]
-    left_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER]
-    right_shoulder = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER]
-    rate = cal_rate(nose, left_mouth, right_mouth, left_shoulder, right_shoulder)
+    ny = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE].y * image_height
+    my = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_RIGHT].y)/2 * image_height 
+    sy = (results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_SHOULDER].y + results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_SHOULDER].y)/2 * image_height
+    rate = (my-sy)/(ny-my)
 
     cv2.putText(image, "TurtleNeck Ratio : {}".format(r),(10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)    
     cv2.putText(image, "Current Ratio : {}".format(rate),(10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-    cv2.imshow('NeckSlice', image)
+    cv2.imshow('NeckSlice(ver.1.1)', image)
         
     if(rate<r):
       cv2.namedWindow('Neck Slice!!')
