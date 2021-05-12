@@ -23,7 +23,9 @@
 
 ## :turtle: 구현 현황
 
-* ### [NeckSlice](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/NeckSlice/Github/NeckSlice.md)
+* ### [Consolidated Version](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Consolidated%20Version/Log.md)
+
+* ### [Ninja_Turtle](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle/Log.md)
 
 * ### [GUI(Interface)](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/GUI(Interface)/Log.md)
 
