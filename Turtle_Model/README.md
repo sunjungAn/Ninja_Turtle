@@ -16,7 +16,7 @@ Ninja_turtle에서 거북목 판단을 위한 모델
 + Ver 1.0 (GridSearchCV를 통한 SVM 파라미터 최적화) - 배은기
 + Ver 1.1 (fit -> trasform 구조를 위한 StandardScaling 및 GridSearchCV을 Pipeline으로 구성) - 배은기
 + Ver 2.1 (matplotlib.pyplot을 이용한 GridSearchCV 출력값 시각화) - 배은기
-+ Ver 2.2 직접 모은 약 4만개의 데이터로 GridSearchCV를 한 결과 중 best_estimator를 pkl로 저장 및 시각과 - 배은기
++ Ver 2.2 직접 모은 약 4만개의 데이터로 GridSearchCV를 한 결과 중 best_estimator를 pkl로 저장 및 시각 - 배은기
 
 
 ## Turtle_Model(Ver 2.2)
