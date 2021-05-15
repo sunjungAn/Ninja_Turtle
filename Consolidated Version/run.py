@@ -10,6 +10,9 @@ mp_pose = mp.solutions.pose
 pkl_file = 'SVM.pkl'
 estimator = joblib.load(pkl_file)
 warning = cv2.imread("./warning.jpg")
+warning = cv2.resize(warning, None, fx = 0.5, fy = 0.5, interpolation=cv2.INTER_AREA)
+loading = cv2.imread("./loading.png")
+loading = cv2.resize(loading, None, fx = 0.7, fy = 0.7, interpolation=cv2.INTER_AREA)
 
 # 수선의 발 길이를 구하는 함수
 def dist(P, A, B):
@@ -42,10 +45,16 @@ class VideoThread(QThread):
                 # pass by reference.
                 results = pose.process(image)
                 image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-
+                
                 if results.pose_landmarks is None:
-                    print("no landmark")
-                    continue
+                    cv2.destroyWindow("Warning")
+                    cv2.namedWindow('Loading')
+                    cv2.moveWindow('Loading', 750, 300)
+                    cv2.imshow('Loading', loading)
+                    if cv2.waitKey(5) & 0xFF == 27:
+                        break
+                    continue        
+                cv2.destroyWindow("Loading")
 
                 nose = results.pose_landmarks.landmark[mp_pose.PoseLandmark.NOSE]
                 left_mouth = results.pose_landmarks.landmark[mp_pose.PoseLandmark.MOUTH_LEFT]
@@ -68,6 +77,7 @@ class VideoThread(QThread):
 
                 if (pred == 1):
                     cv2.namedWindow('Warning')
+                    cv2.moveWindow('Warning', 750, 300)
                     cv2.imshow('Warning', warning)
                 else:
                     cv2.destroyWindow("Warning")
