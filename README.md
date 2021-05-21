@@ -19,7 +19,7 @@
 
 ## :turtle: 기술 다이어그램
 
-![image](https://user-images.githubusercontent.com/55094745/116191702-c136db80-a767-11eb-8fc5-216e5e9c677f.png)
+![image](https://user-images.githubusercontent.com/55094745/119100395-dba46200-ba52-11eb-914a-d8ac9dd7f1d4.png)
 
 ## :turtle: 구현 현황
 
