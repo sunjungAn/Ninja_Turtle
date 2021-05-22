@@ -9,11 +9,15 @@
 
 <img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
-## :turtle: 활동
+## :turtle: 프로젝트 설명
 
-* ### [프로젝트 제안서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Ninja_Turtle%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
+* ### [프로젝트 제안서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%A0%9C%EC%95%88%EC%84%9C.pdf)
 
-* ### [프로젝트 중간발표](https://www.youtube.com/watch?v=4EsYL7l931w)
+* ### [프로젝트 제안 발표](https://www.youtube.com/watch?v=4EsYL7l931w)
+
+* ### [프로젝트 보고서]()
+
+* ### 프로젝트 보고 발표
 
 <br>
 
