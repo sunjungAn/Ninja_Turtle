@@ -5,7 +5,7 @@
 
 ## :turtle: Subject 
 
-* ### 실시간 거북목 예방 시스템
+* ### Pose Lanmark Model을 이용한 실시간 거북목 예방 시스템
 
 <img src="https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/Ninja_Turtle.png?raw=true" alt="Ninja_Turtle.png" width="300" height="300" />
 
@@ -15,15 +15,11 @@
 
 * ### [프로젝트 제안 발표](https://www.youtube.com/watch?v=4EsYL7l931w)
 
-* ### [프로젝트 보고서]()
+* ### [프로젝트 보고서](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf)
 
-* ### 프로젝트 보고 발표
+* ### [프로젝트 최종 발표](https://www.youtube.com/watch?v=PQn7ZtCVNK0)
 
 <br>
-
-## :turtle: 기술 다이어그램
-
-![image](https://user-images.githubusercontent.com/55094745/119100395-dba46200-ba52-11eb-914a-d8ac9dd7f1d4.png)
 
 ## :turtle: 구현 현황
 
@@ -36,6 +32,18 @@
 * ### [TurtleData](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/TurtleData/Log.md)
 
 * ### [TurtleModel](https://github.com/hyunmin0317/Ninja_Turtle/tree/master/Turtle_Model)
+
+<br>
+
+## :turtle: 기술 다이어그램
+
+![image](https://user-images.githubusercontent.com/55094745/119100395-dba46200-ba52-11eb-914a-d8ac9dd7f1d4.png)
+
+<br>
+
+## :turtle: Gantt Chart
+
+![Gantt Chart](https://github.com/hyunmin0317/Ninja_Turtle/blob/master/Docs/Gantt%20chart.png?raw=true)
 
 <br>
 
